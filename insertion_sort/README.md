@@ -21,12 +21,12 @@
 
 `printArray`:  recebe um array `arr` e seu tamanho `n` como parâmetros e imprime o array na tela.
 
-`void printArray(int arr[], int n) {
-    int i;
-    for (i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
-}` 
+    void printArray(int arr[], int n) {
+        int i;
+        for (i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n");
+    }
 
 <br>
 
