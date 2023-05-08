@@ -3,7 +3,7 @@
 
 #define MAX_SIZE 100
 
-void swap(int *x, int *y) {
+void swap_sort(int *x, int *y) {
     int temp = *x;
     *x = *y;
     *y = temp;
@@ -21,7 +21,7 @@ void heapify(int arr[], int n, int i) {
         largest = r;
 
     if (largest != i) {
-        swap(&arr[i], &arr[largest]);
+        swap_sort(&arr[i], &arr[largest]);
         heapify(arr, n, largest);
     }
 }
@@ -31,22 +31,22 @@ void heapsort(int arr[], int n) {
         heapify(arr, n, i);
 
     for (int i = n - 1; i >= 0; i--) {
-        swap(&arr[0], &arr[i]);
+        swap_sort(&arr[0], &arr[i]);
         heapify(arr, i, 0);
     }
 }
 
-int main() {
-    int arr[MAX_SIZE] = { 10, 5, 3, 2, 4 };
-    int n = 5;
+// int main() {
+//     int arr[MAX_SIZE] = { 10, 5, 3, 2, 4 };
+//     int n = 5;
 
-    heapsort(arr, n);
+//     heapsort(arr, n);
 
-    printf("Array ordenado: ");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+//     printf("Array ordenado: ");
+//     for (int i = 0; i < n; i++) {
+//         printf("%d ", arr[i]);
+//     }
+//     printf("\n");
 
-    return 0;
-}
+//     return 0;
+// }
