@@ -6,47 +6,38 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_SIZE 100000
+#define MAX_SIZE 50000000
 
 int main() {
 
-    int vetor[MAX_SIZE];
-    printf("\nGerando numeros...\n");
-    srand(time(NULL));
-    for (int i = 0; i < MAX_SIZE; i++) {
-        int r = rand() % MAX_SIZE * 2;
-        printf("%d\n",r);
-        int repetido = 0;
-        for (int j = 0; j < i; j++) {
-            if (vetor[j] == r) {
-                repetido = 1;
-                break;
-            }
-        }
-        if (repetido) {
-            i--;
-        } else {
-            vetor[i] = r;
-        }
+    int *vetor = malloc(MAX_SIZE * sizeof(int));
+    FILE *file = fopen("random_numbers.txt", "r");
+
+    if (vetor == NULL) {
+        printf("Failed to allocate memory for array\n");
+        return 1;
     }
-    printf("Numeros gerados!\n");
+
+    if (file == NULL) {
+        printf("Failed to open file\n");
+        return 1;
+    }
+
+    for (int i = 0; i < MAX_SIZE; i++) {
+        printf("entrou");
+        fscanf(file, "%d", &vetor[i]);
+    }
+    fclose(file);
     
     clock_t start, end;
     double cpu_time_used;
 
-    // printf("HeapMax - ");
-    // start = clock();
-    // construir_max_heap(vetor, MAX_SIZE);
-    // end = clock();
-    // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    // printf("Tamanho: %d, Tempo de execução: %f segundos\n",MAX_SIZE ,cpu_time_used);
-    
     printf("HeapSort - ");
     start = clock();
     heapsort(vetor, MAX_SIZE);
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Tamanho: %d, Tempo de execução: %f segundos\n",MAX_SIZE ,cpu_time_used);
+    printf("Tamanho: %d, Tempo de execucao: %f segundos\n",MAX_SIZE ,cpu_time_used);
 
     printf("InsertionSort - ");
     int n = sizeof(vetor) / sizeof(vetor[0]);
@@ -54,7 +45,8 @@ int main() {
     insertionSort(vetor, MAX_SIZE);
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Tamanho: %d, Tempo de execução: %f segundos\n",MAX_SIZE ,cpu_time_used);
+    printf("Tamanho: %d, Tempo de execucao: %f segundos\n",MAX_SIZE ,cpu_time_used);
     printf("\n");
+    free(vetor);
     return 0;
 }

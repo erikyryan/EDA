@@ -35,18 +35,3 @@ void heapsort(int arr[], int n) {
         heapify(arr, i, 0);
     }
 }
-
-// int main() {
-//     int arr[MAX_SIZE] = { 10, 5, 3, 2, 4 };
-//     int n = 5;
-
-//     heapsort(arr, n);
-
-//     printf("Array ordenado: ");
-//     for (int i = 0; i < n; i++) {
-//         printf("%d ", arr[i]);
-//     }
-//     printf("\n");
-
-//     return 0;
-// }
