@@ -13,14 +13,3 @@ void insertionSort(int arr[], int n) {
         arr[j + 1] = key;
     }
 }
-
-// int main() {
-//     int arr[] = { 12, 11, 13, 5, 6 };
-//     int n = sizeof(arr) / sizeof(arr[0]);
-//     insertionSort(arr, n);
-//     printf("Array ordenado: ");
-//     for (int i = 0; i < n; i++)
-//         printf("%d ", arr[i]);
-//     printf("\n");
-//     return 0;
-// }
