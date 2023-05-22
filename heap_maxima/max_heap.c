@@ -10,7 +10,7 @@ void swap_max(int *x, int *y) {
     *y = temp;
 }
 
-void subir(int heap[], int i) {
+void subir(int *heap, int i) {
     int pai = (i - 1) / 2;
     if (heap[pai] < heap[i]) {
         swap_max(&heap[pai], &heap[i]);
@@ -18,7 +18,7 @@ void subir(int heap[], int i) {
     }
 }
 
-void descer(int heap[], int n, int i) {
+void descer(int *heap, int n, int i) {
     int maior = i;
     int esquerda = 2 * i + 1;
     int direita = 2 * i + 2;
@@ -35,9 +35,9 @@ void descer(int heap[], int n, int i) {
     }
 }
 
-void inserir(int heap[], int *n, int chave) {
+void inserir(int *heap, int *n, int chave) {
     if (*n == MAX_SIZE) {
-        printf("\nOverflow: Não é possível inserir mais elementos\n");
+        printf("\nOverflow: Nao e possível inserir mais elementos\n");
         return;
     }
 
@@ -48,9 +48,9 @@ void inserir(int heap[], int *n, int chave) {
     subir(heap, i);
 }
 
-void remover(int heap[], int *n) {
+void remover(int *heap, int *n) {
     if (*n <= 0) {
-        printf("\nUnderflow: Não há elementos para remover\n");
+        printf("\nUnderflow: Nao ha elementos para remover\n");
         return;
     }
     if (*n == 1) {
@@ -63,7 +63,7 @@ void remover(int heap[], int *n) {
     descer(heap, *n, 0);
 }
 
-void construir_max_heap(int arr[], int n) {
+void construir_max_heap(int *arr, int n) {
     int ultimoPai = (n / 2) - 1;
     for (int i = ultimoPai; i >= 0; i--)
         descer(arr, n, i);

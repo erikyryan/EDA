@@ -9,7 +9,7 @@ void swap_sort(int *x, int *y) {
     *y = temp;
 }
 
-void heapify(int arr[], int n, int i) {
+void heapify(int *arr, int n, int i) {
     int largest = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
@@ -26,7 +26,7 @@ void heapify(int arr[], int n, int i) {
     }
 }
 
-void heapsort(int arr[], int n) {
+void heapsort(int *arr, int n) {
     for (int i = n / 2 - 1; i >= 0; i--)
         heapify(arr, n, i);
 

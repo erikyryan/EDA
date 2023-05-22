@@ -11,7 +11,7 @@
 int main() {
 
     int *vetor = malloc(MAX_SIZE * sizeof(int));
-    FILE *file = fopen("random_numbers.txt", "r");
+    FILE *file = fopen("random_numbers.txt", "r"); // arquivo gerado usando gerar_numero.c
 
     if (vetor == NULL) {
         printf("Failed to allocate memory for array\n");
@@ -24,7 +24,6 @@ int main() {
     }
 
     for (int i = 0; i < MAX_SIZE; i++) {
-        printf("entrou");
         fscanf(file, "%d", &vetor[i]);
     }
     fclose(file);
@@ -46,7 +45,7 @@ int main() {
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     printf("Tamanho: %d, Tempo de execucao: %f segundos\n",MAX_SIZE ,cpu_time_used);
-    printf("\n");
+    
     free(vetor);
     return 0;
 }

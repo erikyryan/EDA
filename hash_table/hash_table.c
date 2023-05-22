@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
-// Método da divisão
+#define TABLE_SIZE 1300000 //tamanho do table_size sendo 1.3 * n
+
+// metodo da divisao
 int hash_divisao(int chave, int tamanho_tabela) {
     return chave % tamanho_tabela;
 }
 
-// Método da dobra
+// metodo da dobra
 int hash_dobra(int chave, int tamanho_tabela) {
     int num_digitos = log10(tamanho_tabela) + 1;
     int soma = 0;
@@ -18,13 +21,13 @@ int hash_dobra(int chave, int tamanho_tabela) {
     return soma % tamanho_tabela;
 }
 
-// Método da multiplicação
+// metodo da multiplicacao
 int hash_multiplicacao(int chave, int tamanho_tabela) {
     double A = (sqrt(5) - 1) / 2;
     return (int)(tamanho_tabela * (chave * A - (int)(chave * A)));
 }
 
-// Método da análise de dígitos
+// metodo da analise de digitos (incompleto)
 int hash_analise_digitos(int chave, int num_digitos_escolhidos, int *chaves, int tamanho_vetor_chaves, int tamanho_tabela) {
     int i;
     int distribuicao[tamanho_tabela];
@@ -32,6 +35,7 @@ int hash_analise_digitos(int chave, int num_digitos_escolhidos, int *chaves, int
     for (i = 0; i < tamanho_vetor_chaves; i++) {
         distribuicao[chaves[i] % (int)pow(10, num_digitos_escolhidos)]++;
     }
+    
     int desvio[tamanho_tabela];
     double soma_quadrados = 0;
     double soma_absolutos = 0;
@@ -40,21 +44,67 @@ int hash_analise_digitos(int chave, int num_digitos_escolhidos, int *chaves, int
         soma_quadrados += pow(desvio[i], 2);
         soma_absolutos += abs(desvio[i]);
     }
-    // Escolha o desvio de distribuição que deseja usar aqui
-    // Neste exemplo, estamos usando o primeiro desvio de distribuição
     return (chave + desvio[0]) % tamanho_tabela;
 }
 
 int main() {
-    // Teste das funções de dispersão
-    int chaves[] = {1234, 5678, 9101};
-    int tamanho_vetor_chaves = sizeof(chaves)/sizeof(chaves[0]);
-    int tamanho_tabela = 10;
+    int n = 1000000;
+    int *keys = malloc(n * sizeof(int));
 
-    printf("Metodo da divisao: %d\n", hash_divisao(chaves[0], tamanho_tabela));
-    printf("Metodo da dobra: %d\n", hash_dobra(chaves[0], tamanho_tabela));
-    printf("Metodo da multiplicacao: %d\n", hash_multiplicacao(chaves[0], tamanho_tabela));
-    printf("Metodo da analise de digitos: %d\n", hash_analise_digitos(chaves[0], 2, chaves, tamanho_vetor_chaves, tamanho_tabela));
+    srand(time(NULL)); 
+
+    // Gera as chaves aleatoriamente
+    for (int i = 0; i < n; i++) {
+        keys[i] = rand() % 2000000001;
+    }
+
+    int *table_division = malloc(TABLE_SIZE * sizeof(int));
+    int num_colisoes_divisao = 0;
+    for (int i = 0; i < n; i++) {
+        int key = keys[i];
+        int index_division = hash_divisao(key, TABLE_SIZE);
+        if (table_division[index_division] != 0) {
+            num_colisoes_divisao++;
+        }
+        table_division[index_division] = key;
+    }
+    printf("Numero de colisoes (metodo da divisao): %d\n", num_colisoes_divisao);
+    free(table_division);
+
+    for (int i = 0; i < n; i++) {
+        keys[i] = rand() % 2000000001;
+    }
+
+    int *table_fold = malloc(TABLE_SIZE * sizeof(int));
+    int num_colisoes_dobra = 0;
+    for (int i = 0; i < n; i++) {
+        int key = keys[i];
+        int index_fold = hash_dobra(key, TABLE_SIZE);
+        if (table_fold[index_fold] != 0) {
+            num_colisoes_dobra++;
+        }
+        table_fold[index_fold] = key;
+
+    }
+    printf("Numero de colisoes (metodo da dobra): %d\n", num_colisoes_dobra);
+    free(table_fold);
+
+    for (int i = 0; i < n; i++) {
+        keys[i] = rand() % 2000000001;
+    }
+
+    int *table_multiplication = malloc(TABLE_SIZE * sizeof(int));
+    int num_colisoes_multiplicacao = 0;
+    for (int i = 0; i < n; i++) {
+        int key = keys[i];
+        int index_multiplication = hash_multiplicacao(key, TABLE_SIZE);
+        if (table_multiplication[index_multiplication] != 0) {
+            num_colisoes_multiplicacao++;
+        }
+        table_multiplication[index_multiplication] = key;
+    }
+    printf("Numero de colisoes (metodo da multiplicacao): %d\n", num_colisoes_multiplicacao);
+    free(table_multiplication);
 
     return 0;
 }
